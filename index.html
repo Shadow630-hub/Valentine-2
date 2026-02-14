@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise - Final</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body{
+        height:100vh;
+        overflow:hidden;
+        /* Pink top → Slightly darker blue bottom */
+        background: linear-gradient(to bottom, 
+            #ffd6eb 0%,
+            #ffd6eb 40%,
+            #cdeeff 60%,
+            #a9dcff 100%
+        );
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        position:relative;
+        animation: brightnessPulse 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes brightnessPulse{
+        from{ filter: brightness(100%); }
+        to{ filter: brightness(110%); }
+    }
+
+    .content{
+        z-index:2;
+        padding:20px;
+    }
+
+    /* Text Animation */
+    h1{
+        font-size:1.5rem;
+        color:#4fc3f7;
+        text-shadow:0 0 10px rgba(255,255,255,1);
+        margin-bottom:30px;
+        opacity:0;
+        transform: translateY(-40px);
+        animation: slideFadeDown 1.5s ease forwards;
+    }
+
+    /* Button Animation */
+    .btn{
+        background:#d81b60;
+        color:white;
+        border:none;
+        padding:15px 40px;
+        border-radius:50px;
+        font-size:1rem;
+        cursor:pointer;
+        transition:all 0.3s ease;
+        box-shadow:0 0 20px rgba(216,27,96,0.7);
+        opacity:0;
+        transform: translateY(-40px);
+        animation: slideFadeDown 1.8s ease forwards;
+        animation-delay:0.5s;
+    }
+
+    @keyframes slideFadeDown{
+        to{
+            opacity:1;
+            transform: translateY(0);
+        }
+    }
+
+    .btn:hover{
+        transform:scale(1.1);
+    }
+
+    .btn:active{
+        transform:scale(0.95);
+    }
+
+    /* Falling emojis */
+    .emoji{
+        position:absolute;
+        top:-50px;
+        font-size:20px;
+        animation: fall linear infinite;
+        pointer-events:none;
+    }
+
+    @keyframes fall{
+        to{
+            transform: translateY(110vh);
+        }
+    }
+
+    /* Stars */
+    .star{
+        position:absolute;
+        color:white;
+        animation: fall linear infinite, starGlow 2s ease-in-out infinite alternate;
+        pointer-events:none;
+    }
+
+    @keyframes starGlow{
+        from{ text-shadow:0 0 5px white; opacity:0.7; }
+        to{ text-shadow:0 0 20px white; opacity:1; }
+    }
+
+    /* Responsive */
+    @media(min-width:768px){
+        h1{font-size:2rem;}
+        .btn{font-size:1.2rem;}
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="content">
+    <h1>Click softly… a little surprise awaits you 💕</h1>
+    <button class="btn" onclick="goNext()">Click Here</button>
+</div>
+
+<script>
+
+function goNext(){
+    window.location.href = "page2.html";
+}
+
+const emojis = ["🧸","🍫","🍬"];
+const stars = ["✨","⭐","🌟"];
+
+function createEmoji(){
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    emoji.style.left = Math.random()*100 + "vw";
+    emoji.style.animationDuration = (4 + Math.random()*4) + "s";
+    emoji.style.fontSize = (15 + Math.random()*15) + "px";
+    document.body.appendChild(emoji);
+
+    setTimeout(()=>{ emoji.remove(); },8000);
+}
+
+function createStar(){
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.innerText = stars[Math.floor(Math.random()*stars.length)];
+    star.style.left = Math.random()*100 + "vw";
+    star.style.animationDuration = (5 + Math.random()*5) + "s";
+    star.style.fontSize = (10 + Math.random()*15) + "px";
+    document.body.appendChild(star);
+
+    setTimeout(()=>{ star.remove(); },10000);
+}
+
+setInterval(createEmoji,600);
+setInterval(createStar,800);
+
+</script>
+
+</body>
+</html>

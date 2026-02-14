@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise - Page 2 Prototype 3</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: 'Dancing Script', cursive, 'Segoe UI', sans-serif;
+    }
+
+    body{
+        height:100vh;
+        overflow:hidden;
+        position:relative;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        /* Background with intense but soft faded intersection */
+        background: linear-gradient(135deg, #7ecaff 0%, #7ecaff 45%, rgba(126,202,255,0.3) 50%, rgba(255,192,217,0.3) 50%, #ffc0d9 100%);
+    }
+
+    .content{
+        z-index:2;
+        padding:20px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
+
+    /* Note Animation and formatting like a poem */
+    .note{
+        font-size:1.2rem;
+        color:black;
+        text-shadow:0 0 15px rgba(255,255,255,0.8);
+        opacity:0;
+        transform: translateY(-40px);
+        animation: slideFadeDown 1.5s ease forwards;
+        max-width:80%;
+        line-height:1.6;
+        text-align:center;
+    }
+
+    .note span{
+        display:block;
+        margin:2px 0;
+    }
+
+    @keyframes slideFadeDown{
+        to{
+            opacity:1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Falling emojis */
+    .emoji{
+        position:absolute;
+        top:-50px;
+        font-size:20px;
+        animation: fall linear infinite;
+        pointer-events:none;
+    }
+
+    @keyframes fall{
+        to{
+            transform: translateY(110vh);
+        }
+    }
+
+    /* Stars */
+    .star{
+        position:absolute;
+        color:white;
+        animation: fall linear infinite, starGlow 2s ease-in-out infinite alternate;
+        pointer-events:none;
+    }
+
+    @keyframes starGlow{
+        from{ text-shadow:0 0 5px white; opacity:0.7; }
+        to{ text-shadow:0 0 20px white; opacity:1; }
+    }
+
+    /* Hearts and clouds on click */
+    .pop{
+        position:absolute;
+        font-size:20px;
+        animation: popUp 1.5s ease forwards;
+        pointer-events:none;
+    }
+
+    @keyframes popUp{
+        0% { transform: scale(0.5) translateY(0); opacity:1; }
+        100% { transform: scale(1.2) translateY(-50px); opacity:0; }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="note">
+        <span>Ma'am 💖🌹 Every moment</span>
+        <span>I think of you,</span>
+        <span>my heart beats</span>
+        <span>faster 💘✨ You are</span>
+        <span>my sunshine ☀️,</span>
+        <span>my happiness 😍,</span>
+        <span>and my forever</span>
+        <span>smile 🌸💞 Your eyes</span>
+        <span>sparkle like the stars ✨🌟,</span>
+        <span>and your laugh</span>
+        <span>is my favorite melody 🎶🥰</span>
+        <span>I feel so lucky</span>
+        <span>to have you 💌💖</span>
+        <span>You make every day brighter 🌞💝🍫🧸🍬</span>
+        <span>Happy Valentine’s Day,</span>
+        <span>my sweetest love 💕💗💓💞💖💘</span>
+    </div>
+</div>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const emojis = ["🧸","🍫","🍬"];
+const stars = ["✨","⭐","🌟"];
+
+function createEmoji(){
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    emoji.style.left = Math.random()*100 + "vw";
+    emoji.style.animationDuration = (4 + Math.random()*4) + "s";
+    emoji.style.fontSize = (15 + Math.random()*15) + "px";
+    document.body.appendChild(emoji);
+    setTimeout(()=>{ emoji.remove(); },8000);
+}
+
+function createStar(){
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.innerText = stars[Math.floor(Math.random()*stars.length)];
+    star.style.left = Math.random()*100 + "vw";
+    star.style.animationDuration = (5 + Math.random()*5) + "s";
+    star.style.fontSize = (10 + Math.random()*15) + "px";
+    document.body.appendChild(star);
+    setTimeout(()=>{ star.remove(); },10000);
+}
+
+setInterval(createEmoji,600);
+setInterval(createStar,800);
+
+// Hearts and clouds on click
+const pops = ["💗","💖","☁️"];
+
+function createPop(x,y){
+    const pop = document.createElement("div");
+    pop.classList.add("pop");
+    pop.innerText = pops[Math.floor(Math.random()*pops.length)];
+    pop.style.left = x + "px";
+    pop.style.top = y + "px";
+    pop.style.fontSize = (20 + Math.random()*10) + "px";
+    document.body.appendChild(pop);
+    setTimeout(()=>{ pop.remove(); },1500);
+}
+
+document.body.addEventListener('click',(e)=>{
+    createPop(e.clientX,e.clientY);
+});
+</script>
+
+</body>
+</html>
